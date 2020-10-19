@@ -1,16 +1,16 @@
 ---
 layout: default
-title:  Team
+title:  CALM
 ---
 
 # {{ page.title }}
 
 
-## USER 1
-***UCI Net ID***: ucinetid1
+## Bihao Xu
+***UCI Net ID***: bihaox
 
-## USER 2
-***UCI Net ID***: ucinetid2
+## Haonan Xu
+***UCI Net ID***: haonax1
 
-## USER 3
-***UCI Net ID***: ucinetid3
+## Zhouhang Xie
+***UCI Net ID***: zhouhanx
