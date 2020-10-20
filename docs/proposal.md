@@ -20,7 +20,7 @@ such as beam search and nucleus sampling.
 
 For quantitative evaluation, we plan to run our model with keyword to text validation data held out from training process and measure its performance with BLEU score and
 PPLs. To ensure the generated text are style consistent, we plan to use pre-trained text classification models to predict the style label of
-our synthetic texts, and we expect our generated snippets to be classified as intented styles. For relevance of model output to input keywords, we plan to explore word vector based/human scored approaches. Due to the lack of prior work in directly related task, we will develop our baselines as the project moves foward.
+our synthetic texts, and we expect our generated snippets to be classified as the intented style. For relevance of model output to input keywords, we plan to explore word vector based/human scored approaches. Due to the lack of prior work in directly related task, we will develop our baselines as the project moves foward.
 
 #### qualitative analysis
 
@@ -31,4 +31,4 @@ In the moonshot case, we hope we could generate synthetic snippets that are indi
 
 ## Appointment
 
-scheduled
+scheduled 10/21/2020, 9:30 am. 
