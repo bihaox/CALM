@@ -7,7 +7,7 @@ Source code: https://github.com/bihaox/CALM (_fix this_)
 
 Reports:
 
-- [Proposal](proposal.md)
+- [Proposal](proposal.html)
 - [Status](status.html)
 - [Final](final.html)
 
