@@ -4,7 +4,7 @@ title: Proposal
 ---
 ## Project Summary
 
-We consider the problem of generating environment aware, style specific text snippets in Minecraft. Concretely, our Agents will take as input 
+We consider the problem of generating environment aware, style specific text snippets in Minecraft. Concretely, our agent will take as input 
 the environment object string such as "dirt" and "diamond" retrieved from Minecraft and output style specific synthetic texts related to 
 the input, such as jokes and news headlines. 
 
