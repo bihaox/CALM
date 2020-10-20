@@ -3,11 +3,11 @@ layout: default
 title:  Home
 ---
 
-Source code: https://github.com/USER/PROJECT (_fix this_)
+Source code: https://github.com/bihaox/CALM (_fix this_)
 
 Reports:
 
-- [Proposal](proposal.html)
+- [Proposal](proposal.md)
 - [Status](status.html)
 - [Final](final.html)
 
