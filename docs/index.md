@@ -4,7 +4,7 @@ title:  Home
 ---
 
 <p align="center">
-  <img src=https://github.com/bihaox/CALM/tree/main/docs/src/>
+  <img src=https://github.com/bihaox/CALM/tree/main/docs/src/logo0.PNG?raw=true>
 </p>
 
 ## Context Aware Language generator for Minecraft
