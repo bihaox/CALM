@@ -19,7 +19,7 @@ To achieve context aware langauge generation, our system retrieves description o
 
 ![](src/decoding.png){:height="70%" width="70%"}
 
-To find the optimal sequence, our system generates candidate sequence by computing the potential target word swapping loss $$p(target word|h)-p(chosen word|h)$$, and view the current sequence as a candidate hypothesis if such loss is smaller than a pre-defined threshhold. Upon generation of hypothesis, the word swapping loss is assigned to the sequence. Meanwhile, the system will keep checking the alternative possibility where the word swapp did not happen untill another hypothesis generation point is reached or limit of sentence length is reached.
+To find the optimal sequence, our system generates candidate sequence by computing the potential target word swapping loss $$p(target word\|h)-p(chosen word\|h)$$, and view the current sequence as a candidate hypothesis if such loss is smaller than a pre-defined threshhold. Upon generation of hypothesis, the word swapping loss is assigned to the sequence. Meanwhile, the system will keep checking the alternative possibility where the word swapp did not happen untill another hypothesis generation point is reached or limit of sentence length is reached.
 
 
 
