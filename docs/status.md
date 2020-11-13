@@ -34,11 +34,11 @@ To find the optimal sequence, our system generates candidate sequence by computi
 
 ### Style coherent
 
-To ensure the reults we generated are style coherent, we choose to use human evaluation metrics to ensure the ouputs are indeed of the intended style. Specifically, we randomly sample sentences with different styles from our system, and let human readers guess the genre of the generated sentence. We then pick the genre with the most vote from reviewers as the guessed style of the text to be compared with intended text. Out of the eight sample examined, 75% samples style coherent.
+To ensure the reults we generated are style coherent, we choose to use human evaluation metrics to ensure the ouputs are indeed of the intended style. Specifically, we randomly sample sentences with different styles from our system, and let human readers guess the genre of the generated sentence. We then pick the genre with the most vote from reviewers as the guessed style of the text to be compared with intended text. Out of the eight sample examined, 75% samples style coherent(we plan to increase the test sample size after the generation algorithm is stablized in the future).
 
 ### Syntactically sound
 
-To ensure our method only impose minimal damage to the ability of language model to generate syntactically correct text, we use an open source grammar checker to check the suspected grammar errors in our generated text. Specifically, we pasted all the generated samples into grammarly and found an average grammar error rate of 1 per sentence and overall grammarly grading score of 75.
+To ensure our method only impose minimal damage to the ability of language model to generate syntactically correct text, we use an open source grammar checker to check the suspected grammar errors in our generated text. Specifically, we pasted 30 generated samples into grammarly and found an average grammar error rate of 1 per sentence and overall grammarly grading score of 75([description of grammarly score](https://support.grammarly.com/hc/en-us/articles/360007144751-What-is-Performance-and-how-is-it-calculated-)).
 
 ## Remaining Goals and Challenges
 
