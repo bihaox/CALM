@@ -11,6 +11,8 @@ Tell a story about surrounding environment in Minecraft with [SOTA language gene
 
 ## Explore the best output by search-based decoding
 
+Our decoding algorithm finds the optimal position to generation target word forest by keeping track of each "universe" it experienced.
+
 ![](src/decoding.png)
 
 #### Check out our reports and code repo
