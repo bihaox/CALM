@@ -9,7 +9,7 @@ title:  Home
 
 Tell a story about surrounding environment in Minecraft with [SOTA language generators](https://huggingface.co/)!
 
-[![thmnal](src/vid0thumbnail.PNG)](https://www.youtube.com/watch?v=aihWReh2ocA){:height="80%" width="80%"}
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/Zn3SfC7HQ1A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Explore the best output by search-based decoding
 
