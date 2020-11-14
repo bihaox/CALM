@@ -6,7 +6,7 @@ title: Status
 ## Video Report
 The language generation and environment perception module currently runs separately, we are planning to pipe the modules together as of immediate next step.
 
-<iframe width="1120" height="630" src="https://www.youtube.com/embed/aihWReh2ocA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1120" height="630" src="https://www.youtube.com/embed/cUSRvlGsKb0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 
