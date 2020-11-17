@@ -34,7 +34,7 @@ To find the optimal sequence, our system generates candidate sequence by computi
 | :---    | ---:   | ---:        | ---:  |
 | drama | sword      | Long long ago | :::: Long long ago , the sword master Yutai became possessed of his magic talent, transforming from human-type sword into the "Seven Stars of the Jade Buddha" when the Buddha was destroyed by a group of assassins |
 | horror | pig      | In the deep forest | :::: In the deep forest surrounding The Bahamas in 1964 a pig called Nino, a "ghost," awake with fear from a nightmare, has entered an experimental serum and now exists only by a mysterious fate |
-| super hero | lava      | Last night | :::: In the deep forest in Nevada, lava from above has erupted causing a series and unexpected geological collapses that destroy several surrounding communities while a small, humanoid creature called S.S. Spider, who can breathe flames that does |
+| super hero | lava      | In the deep forest | :::: In the deep forest in Nevada, lava from above has erupted causing a series and unexpected geological collapses that destroy several surrounding communities while a small, humanoid creature called S.S. Spider, who can breathe flames that does |
 
 ### Style coherent
 
