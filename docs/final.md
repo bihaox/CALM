@@ -16,7 +16,7 @@ This work incorporates inspirations from multiple lines of research.
 
 The objective of language modeling is to learn the probability of a given sentence s and its words $$w_i$$, denoted as $$s=(w_0,w_1,...w_n)$$ with respect to some corpus.
 
-When using a neural network with set of parameters $\theta$ to conduct language modeling, the model tries to approach the true probability of a sentence $$q(s)$$ by tuning its parameters so that the following goal could be achieved.
+When using a neural network with set of parameters $$\theta$$ to conduct language modeling, the model tries to approach the true probability of a sentence $$q(s)$$ by tuning its parameters so that the following goal could be achieved.
 
 $$q(s) =  \prod_{i=1}^{n} p_{\theta}(w_i \mid w_{<i})$$
 
