@@ -31,6 +31,7 @@ To address the issue of greedy sampling, several methods such as beam search, to
 ## Approach
 
 ![](src/decoding.png){:height="80%" width="80%"}
+
 *an example of out generation approach*
 
 We choose pretrained GPT-2 model fine tuned on style specific corpus such as horror story and super hero stories for language generation. At each language generation step, the pretrained model ouputs a logits of  corpus size that specifies the probability of the corresponding words to appear at the current position. Traditionally, the word chosen at each generation step is achived by approaches such as nucleus sampling and top-k sampling([see here](https://arxiv.org/pdf/1904.09751.pdf)), as stated in background. 
