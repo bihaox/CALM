@@ -3,23 +3,37 @@ layout: default
 title: Status
 ---
 
-## Video Report
-The language generation and environment perception module currently runs separately, we are planning to pipe the modules together as of immediate next step.
-
-<iframe width="1120" height="630" src="https://www.youtube.com/embed/cUSRvlGsKb0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 
-We consider the problem of generating environment aware, style specific text snippets in Minecraft. Concretely, our agent will take as input 
-the environment object string such as "dirt" and "diamond" retrieved from Minecraft and output style specific synthetic texts related to 
-the input, such as horror stories and super hero stories. 
+We consider the problem of generating context aware, style specific text snippets in Minecraft. Specifically, our agent will recognize the surrounding environment, which we refer to as context, to generate short stories that are coherent to the receipted environment. For example, given a river flowing nearby the agent as context and a user defined style such as horror story style, the agent should be able to generate a short text snippets that is relevant to river in the style of horror stories.
 
+## Background
+
+This work incorporates inspirations from multiple lines of research.
+
+#### Language modeling
+
+The objective of language modeling is to learn the probability of a given sentence s and its words $$w_i$$, denoted as $$s=(w_0,w_1,...w_n)$$ with respect to some corpus.
+
+When using a neural network with set of parameters $\theta$ to conduct language modeling, the model tries to approach the true probability of a sentence $$q(s)$$ by tuning its parameters so that the following goal could be achieved.
+
+$$q(s) =  \prod_{i=1}^{n} p_{\theta}(w_i \mid w_{<i})$$
+
+The neural network training process is conducted by minimizing the negative log-likelihood by a collection of sample sentences, we do not go into detail here as our work utilizes pre-trained neural model.
+
+#### Text generation and decoding methods
+
+On a very fuzzy level, text generation is achieved by incrementally generating the next word $$w_i$$ given $$w_{<i}$$, until an end of sentence token is sampled($$w_i = \textit{<EOS>}$$). However, various research have shown that greedy decoding algorithm that selects word that maximizes the conditional probability $$p(w_i \mid w_{<i})$$ is problematic, and imposes issues such as text degradation.
+
+To address the issue of greedy sampling, several methods such as beam search, top-k sampling and nucleus sampling have been developed, with the general idea of incorporating stochastic into the generation process. Concretely, these algorithms will still choose a word $$w_i$$ with high probability at each step, but do not always choose the word that maximizes the conditional probability.
 
 ## Approach
 
 ![](src/decoding.png){:height="80%" width="80%"}
+*an example of out generation approach*
 
-We choose pretrained GPT-2 model fine tuned on style specific corpus such as horror story and super hero stories for language generation. At each language generation step, the pretrained model ouputs a logits of  corpus size that specifies the probability of the corresponding words to appear at the current position. Traditionally, the word chosen at each generation step is achived by approaches such as nucleus sampling and top-k sampling([see here](https://arxiv.org/pdf/1904.09751.pdf)). 
+We choose pretrained GPT-2 model fine tuned on style specific corpus such as horror story and super hero stories for language generation. At each language generation step, the pretrained model ouputs a logits of  corpus size that specifies the probability of the corresponding words to appear at the current position. Traditionally, the word chosen at each generation step is achived by approaches such as nucleus sampling and top-k sampling([see here](https://arxiv.org/pdf/1904.09751.pdf)), as stated in background. 
 
 To achieve context aware langauge generation, our system retrieves description of surrounding blocks from adjacent blocks of the agent(such as 'diamond_block') and returns a string that is common in natural language('diamond'). We then try to make the target word appear in our output text snippet by finding a position where the target word is most likely to appear. Formally, the context aware language generation task is defined as finding a sequence $$(w_1,w_2,w_3... w_n)$$ with an victim word $$w_v$$ such that $$abs(p(target word \mid w_0, ... , w_{v-1})-p(w_v \mid w_0, ... , w_{v_1}))$$ is minimized, while the raw probability of a certain word is sampled at each generation step after the word swapping happened is given by $$p(w_i \mid w_0, w_1, ... , target word, ... , w_{i-1})$$(prior to applying topk/nucleus sampling). 
 
