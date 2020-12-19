@@ -146,7 +146,7 @@ Out of 60 samples, our proposed method outperforms the basedline method in 52 ca
 
 It is clear that diamond is a inserted word, and the grammar is also not completely coherent here(note that the brackets are masked in evaluation session). However, both Grammarly and GoogleDoc grammar checker fails to recognize such incongruity. Compared to the baseline, our model could put the target word into context. For example:
 
-* ...to study the ancient history of pig farming...
+* ...to study the ancient history of {{{pig}}} farming...
 
 When recognized that pig is inserted in the generation process, out model will went on to talk about related terms like "farming", thus the generated text looks more natural.
 
