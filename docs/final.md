@@ -51,7 +51,7 @@ We introduce the implementaion of our baseline and proposed approach, and discus
 
 #### 2.1 baseline generation approach
 
-![](src/baseline.PNG){:height="80%" width="80%"}
+![](src/baseline.PNG){:height="65%" width="65%"}
 
 In comparison to our proposed generation method, we implemented a generator that swaps the target string into pre-stored human-written story snippets. Upon initialization, the generator keeps a publically available pool of stories with genre labels, originally used to train neural models(4). In the generation process, we first randomly sample a story snippet of desired genre from the story pool, then swaps the given string into the sampled story. 
 
