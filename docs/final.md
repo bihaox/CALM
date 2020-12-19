@@ -6,7 +6,7 @@ title: Status
 
 ## Video
 
-<iframe width="1120" height="630" src="https://youtu.be/WQxsgLZk0yg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1120" height="630" src="https://www.youtube.com/embed/WQxsgLZk0yg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 
@@ -61,7 +61,7 @@ We choose pretrained GPT-2 model fine tuned on style specific corpus such as hor
 
 To achieve context aware langauge generation, our system retrieves description of surrounding blocks from adjacent blocks of the agent(such as 'diamond_block') and returns a string that is common in natural language('diamond'). We then try to make the target word appear in our output text snippet by finding a position where the target word is most likely to appear. Formally, the context aware language generation task is defined as finding a sequence $$(w_1,w_2,w_3... w_n)$$ with an victim word $$w_v$$ such that $$abs(p(target word \mid w_0, ... , w_{v-1})-p(w_v \mid w_0, ... , w_{v_1}))$$ is minimized, while the raw probability of a certain word is sampled at each generation step after the word swapping happened is given by $$p(w_i \mid w_0, w_1, ... , target word, ... , w_{i-1})$$(prior to applying topk/nucleus sampling). 
 
-![](src/gptGen.png)
+![](src/gptGen.PNG)
 <i>a more detailed description</i>
 
 To find the optimal sequence, our system generates candidate sequence by computing the potential target word swapping loss $$abs(p(target word \mid h_{t-1})-p(chosen word \mid h_{t-1}))$$ at each generation step t, and view the current sequence as a candidate hypothesis if such loss is smaller than a pre-defined threshhold. Upon generation of a hypothesis, the word swapping loss is assigned to that branch as a score. Meanwhile, the system will keep on the generation process with other possible cases where the word swap did not take place, untill a new position where the target word could be swapped in or end of generation steps is reached. After the exploration of candicate hypothesises is done, we choose the word sequence with lowest swapping loss as output.
@@ -110,12 +110,14 @@ To ensure the results we generated are style coherent, we choose to use human ev
 
 Specifically, we randomly sample sentences with different styles from our system, and let human readers guess the genre of the generated sentence. Upon evaluation, the human rater is allowed to pick two genres out of the six possible genres. We mark a text snippet is correctly recognized if one of the guessed genre by human evaluator is the true genre of that text. We report the averaged recognized examples among human evaluators as follows:
 
+
 | Method | Average correctly recognized samples | 
 | :---    | ---:   | 
 | Human Written | 37/60      | 
 | CALM<i>(proposed)</i> |  35/60     |
 | Random Selection |  20/60     |
 
+    
 Note that the Random Selection row is the result one would get if genre labels were randomly assigned to 60 samples with balancely distributed genres. Interestingly, upon evaluation we found that it is harder than expected for a human evaluator to guess the genre of a text snippets. In conclusion, we show that our  generated result could achieve similar performance as human-produced texts.
 
 
@@ -123,20 +125,24 @@ Note that the Random Selection row is the result one would get if genre labels w
 
 We then let human evaluators rate the coherence score of a piece of text given its genre from 0 to 5. More precisely, 0 means not coherent at all and 5 means the genre is extremely clear. We show that our generated text generally achieves result as good as human written texts.
 
+
 | Method | Average rated score (60 samples)| 
 | :---    | ---:   | 
 | Human Written | 3.75/5.0     | 
 | CALM<i>(proposed)</i> |  3.67/5.0     |
 
+
 ### 2. syntactically sound
 
 To ensure our method only impose minimal damage to the ability of language model to generate syntactically correct text, we use Grammarly, an open source grammar checker to check the suspected grammar errors in our generated text. For a given docment, grammarly will reports the count of suspected errors and an overall score for writting([description of grammarly score](https://support.grammarly.com/hc/en-us/articles/360007144751-What-is-Performance-and-how-is-it-calculated-)).
+
 
 | Method | Error Count(120 samples)   | Grammarly Score |
 | :---    | ---:   | ---:        |
 | Swap-based<i>(baseline)</i> | 147      | 87 |
 | Human Written | 142      | 86 | 
 | CALM<i>(proposed)</i> | 151      | 85 | 
+
 
 
 Specifically, we pasted 120 generated samples for both the proposed method, the baseline method and human written texts into grammarly. The number of flagged errors and overall writing scores is shown as above. We conclude that our proposed method could generate text that are as grammarly sound as humans.
