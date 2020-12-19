@@ -6,7 +6,7 @@ title: Status
 
 ## Video
 
-<iframe width="1120" height="630" src="https://www.youtube.com/embed/WQxsgLZk0yg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1008" height="567" src="https://www.youtube.com/embed/WQxsgLZk0yg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 
@@ -89,11 +89,7 @@ We cover our method for retrieving strings from surrounding environment in this 
 
 ## Evaluation
 
-| Style | Target word   | Word seed | Text |
-| :---    | ---:   | ---:        | ---:  |
-| drama | sword      | Long long ago | :::: Long long ago , the sword master Yutai became possessed of his magic talent, transforming from human-type sword into the "Seven Stars of the Jade Buddha" when the Buddha was destroyed by a group of assassins |
-| horror | pig      | In the deep forest | :::: In the deep forest surrounding The Bahamas in 1964 a pig called Nino, a "ghost," awake with fear from a nightmare, has entered an experimental serum and now exists only by a mysterious fate |
-| super hero | lava      | In the deep forest | :::: In the deep forest in Nevada, lava from above has erupted causing a series and unexpected geological collapses that destroy several surrounding communities while a small, humanoid creature called S.S. Spider, who can breathe flames that does |
+![](src/samples.PNG)
 
 
 To evaluate our proposed generation method, we compare results of our method against our baseline and/or human written short story snippets in various setups. We evaluate our results by the following characteristics:
@@ -110,16 +106,12 @@ We show our method could generate text that is generally on par with human writt
 
 To ensure the results we generated are style coherent, we choose to use human evaluation metrics to ensure the ouputs are indeed of the intended style. We use two methods to check this feature: letting human evaluators guess the style of a given text without knowing its genre, and letting human evaluators rate the style coherency of a text given its genre. In both settings, we evaluated our generated text against human written text snippets. Note that our swap-based generator uses samples from the same human written text dataset, thus we omit its results from this section in particular.
 
+![](src/human-eval.PNG)
+
 #### 1.1 measurement by style classification
 
 Specifically, we randomly sample sentences with different styles from our system, and let human readers guess the genre of the generated sentence. Upon evaluation, the human rater is allowed to pick two genres out of the six possible genres. We mark a text snippet is correctly recognized if one of the guessed genre by human evaluator is the true genre of that text. We report the averaged recognized examples among human evaluators as follows:
 
-
-| Method | Average correctly recognized samples | 
-| :---    | ---:   | 
-| Human Written | 37/60      | 
-| CALM<i>(proposed)</i> |  35/60     |
-| Random Selection |  20/60     |
 
     
 Note that the Random Selection row is the result one would get if genre labels were randomly assigned to 60 samples with balancely distributed genres. Interestingly, upon evaluation we found that it is harder than expected for a human evaluator to guess the genre of a text snippets. In conclusion, we show that our  generated result could achieve similar performance as human-produced texts.
@@ -130,22 +122,13 @@ Note that the Random Selection row is the result one would get if genre labels w
 We then let human evaluators rate the coherence score of a piece of text given its genre from 0 to 5. More precisely, 0 means not coherent at all and 5 means the genre is extremely clear. We show that our generated text generally achieves result as good as human written texts.
 
 
-| Method | Average rated score (60 samples)| 
-| :---    | ---:   | 
-| Human Written | 3.75/5.0     | 
-| CALM<i>(proposed)</i> |  3.67/5.0     |
-
 
 ### 2. syntactically sound
 
 To ensure our method only impose minimal damage to the ability of language model to generate syntactically correct text, we use Grammarly, an open source grammar checker to check the suspected grammar errors in our generated text. For a given docment, grammarly will reports the count of suspected errors and an overall score for writting([description of grammarly score](https://support.grammarly.com/hc/en-us/articles/360007144751-What-is-Performance-and-how-is-it-calculated-)).
 
 
-| Method | Error Count(120 samples)   | Grammarly Score |
-| :---    | :---   | ---:        |
-| Swap-based<i>(baseline)</i> | 147      | 87 |
-| Human Written | 142      | 86 | 
-| CALM<i>(proposed)</i> | 151      | 85 | 
+![](src/grammarly-eval.PNG)
 
 
 
