@@ -4,6 +4,7 @@ title: Status
 ---
 
 
+
 ## Video
 
 <iframe width="1008" height="567" src="https://www.youtube.com/embed/WQxsgLZk0yg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -50,9 +51,11 @@ We introduce the implementaion of our baseline and proposed approach, and discus
 
 #### 2.1 baseline generation approach
 
+![](src/baseline.PNG){:height="80%" width="80%"}
+
 In comparison to our proposed generation method, we implemented a generator that swaps the target string into pre-stored human-written story snippets. Upon initialization, the generator keeps a publically available pool of stories with genre labels, originally used to train neural models(4). In the generation process, we first randomly sample a story snippet of desired genre from the story pool, then swaps the given string into the sampled story. 
 
-To determine the position to swap the target string in, we make use of [part-of-speech](https://medium.com/analytics-vidhya/pos-tagging-using-conditional-random-fields-92077e5eaa31#:~:text=POS%20tagging%20is%20the%20process,which%20the%20word%20is%20used.) labels. Specifically, we view a position in the sampled text as potential position if the part-of-speech tag of the original token at such position is the same as the desired string.
+To determine the position to swap the target string in, we make use of [part-of-speech](https://medium.com/analytics-vidhya/pos-tagging-using-conditional-random-fields-92077e5eaa31#:~:text=POS%20tagging%20is%20the%20process,which%20the%20word%20is%20used.) labels. Specifically, we view a position in the sampled text as potential position if the part-of-speech tag of the original token at such position is the same as the desired string. For example, the swap in the above picture happened because 'pince' and 'cow' are both Nouns.
 
 #### 2.2 proposed generation approach
 
