@@ -10,9 +10,12 @@ title: Status
 
 ## Project Summary
 
-We propose Context Aware Language Generator for Minecraft(CALM), a framework for generating environment aware, style specific text snippets in Minecraft. Specifically, our agent will recognize the surrounding environment, which we refer to as context, to generate short stories that are coherent to the received environment. For example, given a river flowing near the agent as context and a user defined style such as horror story style, the agent should be able to generate short text snippets that contain string “river” in the style of horror stories.
+We propose Context Aware Language Generator for Minecraft(CALM), a framework for generating environment aware, style specific text snippets in Minecraft. Specifically, our agent will recognize the surrounding environment, which we refer to as context, to generate short stories that are coherent to the received environment. For example, given a river flowing near the agent as context and a user defined style such as horror story style, the agent should be able to generate short text snippets that contain string “river” in the style of horror stories. Concretely, we decided that our system will support generation of the following six styles: superhero, action, drama, horror, thriller, and sci_fi. Meanwhile, our system could take into account discrete blocks, composite blocks, weather and time of day when generating text snippets.
 
-Existing works on generating text with given string usually involves training customized model or changing the generation process to deviate from auto-regressive manner, thus making it not convenient to leverage these methods(7,10,13). On the other hand, modification-based methods that swapps the words into templates/existing texts fails to generate diverse samples, and the generated texts depends on its template(8). With these issues in mind, we propose to make use of pre-trained style-aware language model with our modified search-based decoding algorithm that ensures the output text contains the target string. We show our method could generate results that are style-coherent and sntactically-sound when compared to human-written texts, and does not require the user to train a customized model.
+To be able to generate diverse and realistic stories, we believe it is important to incorporate AI/ML algorithms in the generation process. Existing works on generating text with given string usually involves training customized model or changing the generation process to deviate from auto-regressive manner, thus making it not convenient to leverage these methods(7,10,13). On the other hand, modification-based methods that swapps the words into templates/existing texts fails to generate diverse samples, and the generated texts depends on its template(8).  With these issues in mind, we propose to make use of pre-trained style-aware language model with our modified search-based decoding algorithm that ensures the output text contains the target string. We show our method could generate results that are style-coherent and sntactically-sound when compared to human-written texts, and does not require the user to train a customized model.
+
+
+ 
 
 ## Approaches
 
@@ -47,7 +50,7 @@ We introduce the implementaion of our baseline and proposed approach, and discus
 
 #### 2.1 baseline generation approach
 
-In comparison to our proposed generation method, we implemented a generator that swaps the target string into pre-stored human-written story snippets. Upon initialization, the generator keeps a pool of stories with genre labels. In the generation process, we first randomly sample a story snippet of desired style from the story pool, then swaps the given string into the sampled story. 
+In comparison to our proposed generation method, we implemented a generator that swaps the target string into pre-stored human-written story snippets. Upon initialization, the generator keeps a publically available pool of stories with genre labels, originally used to train neural models(4). In the generation process, we first randomly sample a story snippet of desired genre from the story pool, then swaps the given string into the sampled story. 
 
 To determine the position to swap the target string in, we make use of [part-of-speech](https://medium.com/analytics-vidhya/pos-tagging-using-conditional-random-fields-92077e5eaa31#:~:text=POS%20tagging%20is%20the%20process,which%20the%20word%20is%20used.) labels. Specifically, we view a position in the sampled text as potential position if the part-of-speech tag of the original token at such position is the same as the desired string.
 
@@ -57,7 +60,11 @@ To determine the position to swap the target string in, we make use of [part-of-
 
 <i>our proposed approach</i>
 
-We choose pretrained GPT-2 model fine tuned on style specific corpus such as horror story and super hero stories for language generation(4, 6). At each language generation step, the pretrained model ouputs a logits of  corpus size that specifies the probability of the corresponding words to appear at the current position. Traditionally, the word chosen at each generation step is achived by approaches such as nucleus sampling and top-k sampling(14). 
+We choose pretrained GPT-2 model fine tuned on style specific corpus such as horror story and super hero stories for language generation(4, 6). During the training process, the pre-trained model was given samples that starts with a genre token, thus the model will learn to generate different texts based on the given genre token. A typical sample in training data looks like the following:
+
+* <horror><BOS>...a short horror story...
+
+Thus, we would be able to control the generation behaviour of the model by conditioning the model on the same special style tokens. At each language generation step, the pretrained model ouputs a logits of  corpus size that specifies the probability of the corresponding words to appear at the current position. Traditionally, the word chosen at each generation step is achived by approaches such as nucleus sampling and top-k sampling(14). 
 
 To achieve context aware langauge generation, our system retrieves description of surrounding blocks from adjacent blocks of the agent(such as 'diamond_block') and returns a string that is common in natural language('diamond'). We then try to make the target word appear in our output text snippet by finding a position where the target word is most likely to appear. Formally, the context aware language generation task is defined as finding a sequence $$(w_1,w_2,w_3... w_n)$$ with an victim word $$w_v$$ such that $$abs(p(target word \mid w_0, ... , w_{v-1})-p(w_v \mid w_0, ... , w_{v_1}))$$ is minimized, while the raw probability of a certain word is sampled at each generation step after the word swapping happened is given by $$p(w_i \mid w_0, w_1, ... , target word, ... , w_{i-1})$$(prior to applying topk/nucleus sampling). 
 
@@ -85,6 +92,14 @@ We cover our method for retrieving strings from surrounding environment in this 
 * <i>Detecting mob:</i> 
 
     We use ObservationFromNearbyEntities to detect mobs. When present, the Mod will return observations that list the positions of all entities that fall within the given ranges of the agent. A JSON array will be returned for each range requested, named using the name attribute of the range. Within the array will be a series of elements, one for each entity
+    
+* <i>Detecting weather:</i> 
+
+    The Malmo API does not provide support for the agent to percept the weather, but a user might want to modify the time of day using Malmo environment xml. In that case, we provide ability in our system to return a string that corresponds to the current weather in game(rain, thunder, clear). 
+    
+* <i>Detecting time of day:</i> 
+
+    The Malmo API does not provide support for the agent to percept the in-game time of day, but a user might want to modify this environment feature using Malmo environment xml. We also provide ability in our system to return defined time of day(day/night) string.
 
 
 ## Evaluation
@@ -148,7 +163,7 @@ It is clear that diamond is a inserted word, and the grammar is also not complet
 
 * ...to study the ancient history of pig farming...
 
-When recognized that pig is inserted in the generation process, out model will went on to talk about related terms like "farming", thus the generated text looks more natural.
+When recognized that pig is inserted in the generation process, out model will went on to talk about related terms like "farming", thus the generated text looks more natural. In summary, we show that our model uses target strings better than the baseline model.
 
 
 ### 4. other discussions related to evaluation
