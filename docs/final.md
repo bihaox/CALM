@@ -12,7 +12,7 @@ title: Status
 
 We propose Context Aware Language Generator for Minecraft(CALM), a framework for generating environment aware, style specific text snippets in Minecraft. Specifically, our agent will recognize the surrounding environment, which we refer to as context, to generate short stories that are coherent to the received environment. For example, given a river flowing near the agent as context and a user defined style such as horror story style, the agent should be able to generate short text snippets that contain string “river” in the style of horror stories.
 
-Existing works on generating text with given string usually involves training customized model or changing the generation process to deviate from auto-regressive manner, thus making it not convenient to leverage these methods. On the other hand, modification-based methods that swapps the words into templates/existing texts fails to generate diverse samples, and the generated texts depends on its template. With these issues in mind, we propose to make use of pre-trained style-aware language model with our modified search-based decoding algorithm that ensures the output text contains the target string. We show our method could generate results that are style-coherent and sntactically-sound when compared to human-written texts, and does not require the user to train a customized model.
+Existing works on generating text with given string usually involves training customized model or changing the generation process to deviate from auto-regressive manner, thus making it not convenient to leverage these methods(7,10,13). On the other hand, modification-based methods that swapps the words into templates/existing texts fails to generate diverse samples, and the generated texts depends on its template(8). With these issues in mind, we propose to make use of pre-trained style-aware language model with our modified search-based decoding algorithm that ensures the output text contains the target string. We show our method could generate results that are style-coherent and sntactically-sound when compared to human-written texts, and does not require the user to train a customized model.
 
 ## Approaches
 
@@ -33,13 +33,13 @@ To make the report self-contained, we briefly cover the concept of language mode
 
 * <i>Text generation and decoding methods: </i> Losely speaking, text generation is achieved by incrementally generating the next word $$w_i$$ given $$w_{<i}$$, until an end of sentence token is sampled($$w_i = \textit{<EOS>}$$). However, various research have shown that greedy decoding algorithm that selects word that maximizes the conditional probability $$p(w_i \mid w_{<i})$$ is problematic, and imposes issues such as generated text becomes a sequence of same words.
 
-    To address this issue, several methods such as beam search, top-k sampling and nucleus sampling have been developed, with the general idea of incorporating stochasticity into the generation process. Concretely, these algorithms will still choose a word $$w_i$$ with high probability at each step, but do not always choose the word that maximizes the conditional probability.
+    To address this issue, several methods such as beam search, top-k sampling and nucleus sampling have been developed, with the general idea of incorporating stochasticity into the generation process(5, 11). Generally, these algorithms will still choose a word $$w_i$$ with high probability at each step, but do not always choose the word that maximizes the conditional probability.
     
     
-* <i>Part of speech tagging:</i> Part of speech tagging is the task of assigning part of speech to each word for a given sequence. Examples of POS tags are Nouns(NN), proper Nouns(NNP) and coordinating conjunctions(CC). There are multiple ways to achieve this task, such as neural network based methods and conditional random field based methods. Libraries that provides this functionality includes NLTK, StanfordNLP tagger, etc.
+* <i>Part of speech tagging:</i> Part of speech tagging is the task of assigning part of speech to each word for a given sequence. Examples of POS tags are Nouns(NN), proper Nouns(NNP) and coordinating conjunctions(CC). There are multiple ways to achieve this task, such as neural network based methods and conditional random field based methods. Libraries that provides this functionality includes NLTK, StanfordNLP tagger, etc(9, 12).
 
 
-* <i>GPT-2: </i>The GPT-2 model is a [transformer](http://jalammar.github.io/illustrated-transformer/)-based model trained on 8-million web pages. The model could be used as-is, but could also be fine-tuned on domain specific text to adapt to tasks that require the model to understand things beyond web pages. For example, our work uses a GPT-2 model trained on stories. 
+* <i>GPT-2: </i>The GPT-2 model is a [transformer](http://jalammar.github.io/illustrated-transformer/)-based model trained on 8-million web pages(1, 4). The model could be used as-is, but could also be fine-tuned on domain specific text to adapt to tasks that require the model to understand things beyond web pages. For example, our work uses a GPT-2 model fine-tuned trained on story pieces that begins with a special genre token, and thus the genre of generated text could be controlled by conditioning the decoder on any genre token of choice(4).
 
 ### 2. Text generation methods
 
@@ -57,7 +57,7 @@ To determine the position to swap the target string in, we make use of [part-of-
 
 <i>our proposed approach</i>
 
-We choose pretrained GPT-2 model fine tuned on style specific corpus such as horror story and super hero stories for language generation. At each language generation step, the pretrained model ouputs a logits of  corpus size that specifies the probability of the corresponding words to appear at the current position. Traditionally, the word chosen at each generation step is achived by approaches such as nucleus sampling and top-k sampling([see here](https://arxiv.org/pdf/1904.09751.pdf)). 
+We choose pretrained GPT-2 model fine tuned on style specific corpus such as horror story and super hero stories for language generation(4, 6). At each language generation step, the pretrained model ouputs a logits of  corpus size that specifies the probability of the corresponding words to appear at the current position. Traditionally, the word chosen at each generation step is achived by approaches such as nucleus sampling and top-k sampling(14). 
 
 To achieve context aware langauge generation, our system retrieves description of surrounding blocks from adjacent blocks of the agent(such as 'diamond_block') and returns a string that is common in natural language('diamond'). We then try to make the target word appear in our output text snippet by finding a position where the target word is most likely to appear. Formally, the context aware language generation task is defined as finding a sequence $$(w_1,w_2,w_3... w_n)$$ with an victim word $$w_v$$ such that $$abs(p(target word \mid w_0, ... , w_{v-1})-p(w_v \mid w_0, ... , w_{v_1}))$$ is minimized, while the raw probability of a certain word is sampled at each generation step after the word swapping happened is given by $$p(w_i \mid w_0, w_1, ... , target word, ... , w_{i-1})$$(prior to applying topk/nucleus sampling). 
 
@@ -68,7 +68,7 @@ To find the optimal sequence, our system generates candidate sequence by computi
 
 #### 2.3 discussion of generation approaches
 
-The baseline method had the advantage of being easy to implement and having fast inference time. However, the swap-based nature makes it unable to generate completely orginal text snippets. Meanwhile, while POS tagger most gerentees the generated text is grammartically correct, this approach does not take into consideration the meaning of the target word. Compared to the baseline, our proposed method could generate more diverse and unseen text snippets. Meanwhile, the model could consider the semantics of the target words in generation process, thus could produce more natural texts with given string.
+The baseline method had the advantage of being easy to implement and having fast inference time. However, the swap-based nature makes it unable to generate completely orginal text snippets. Meanwhile, while POS tagger most gerentees the generated text is grammartically correct, this approach does not take into consideration the meaning of the target word. Compared to the baseline, our proposed method could generate more diverse and unseen text snippets. Meanwhile, the model could consider the semantics of the target words in generation process, thus could produce more natural texts with given string. Howver, due to the large search space that is explored in the decoding process, our proposed method have longer inference time when compared to the baseline model.
 
 ### 3. Environment perception methods
 
@@ -141,9 +141,32 @@ In general, all methods of generation will generate grammartically correct text 
 
 A basic requirement for our language generation task is the ability to make the target string appear in the output. To evaluate this, we queried both our baseline generator and proposed generator for 120 samples, and both of the generators succeeded in all cases. 
 
-## Resources Used
+## References
 
-* [Hugging Face pretrained models](https://huggingface.co/)
-* [NLTK](https://www.nltk.org/)
-* [Grammar Checker in Python](https://pypi.org/project/grammar-check/)
-* Grammarly
+1. [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+
+2. [Better Language Models and Their Implications](https://openai.com/blog/better-language-models/)
+
+3. [Grammarly](https://twitter.com/Grammarly?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor)
+
+4. [GPT2 Genre Based Story Generator](https://huggingface.co/pranavpsv/gpt2-genre-story-generator)
+
+5. [Hierarchical Neural Story Generation #aka topk samping](https://arxiv.org/pdf/1805.04833.pdf) 
+
+6. [Huggingface: On a mission to solve NLP, one commit at a time.](https://huggingface.co/)
+
+7. [Insertion Transformer: Flexible Sequence Generation via Insertion Operations](https://arxiv.org/abs/1902.03249)
+
+8. [Masterpiece Generator](https://www.plot-generator.org.uk/story/)
+
+9. [Natural Language Toolkit](https://www.nltk.org/)
+
+10. [Progressive Generation of Long Texts](https://arxiv.org/abs/2006.15720)
+
+11. [The Curious Case of Neural Text Degeneration](https://arxiv.org/abs/1904.09751)
+
+12. [The Stanford CoreNLP Toolkit](https://stanfordnlp.github.io/CoreNLP/)
+
+13. [Topic Aware Neural Response Generation](https://arxiv.org/abs/1606.08340)
+
+14. [Neural Language Generation: Formulation, Methods, and Evaluation](https://arxiv.org/abs/2007.15780)
