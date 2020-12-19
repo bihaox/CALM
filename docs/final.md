@@ -80,9 +80,11 @@ To find the optimal sequence, our system generates candidate sequence by computi
 
 The baseline method had the advantage of being easy to implement and having fast inference time. However, the swap-based nature makes it unable to generate completely orginal text snippets. Meanwhile, while POS tagger most gerentees the generated text is grammartically correct, this approach does not take into consideration the meaning of the target word. Compared to the baseline, our proposed method could generate more diverse and unseen text snippets. Meanwhile, the model could consider the semantics of the target words in generation process, thus could produce more natural texts with given string. Howver, due to the large search space that is explored in the decoding process, our proposed method have longer inference time when compared to the baseline model.
 
-### 3. Environment perception methods
+### 3. The environment perception module
 
-We cover our method for retrieving strings from surrounding environment in this section. 
+#### 3.1 Environment perception methods
+
+We cover our methods for retrieving strings from surrounding environment in this section. 
 
 * <i>Detecting object from single block:</i> 
 
@@ -103,6 +105,10 @@ We cover our method for retrieving strings from surrounding environment in this 
 * <i>Detecting time of day:</i> 
 
     The Malmo API does not provide support for the agent to percept the in-game time of day, but a user might want to modify this environment feature using Malmo environment xml. We also provide ability in our system to return defined time of day(day/night) string.
+    
+#### 3.2 Interaction between environment perception and text generation modules
+
+We designed the two modules to be stand alone, and both could be used as-is. We include relevant implementaion that is required to replicate our results in the demo video in this section, but both modules should be easily customizable.
 
 
 ## Evaluation
@@ -117,16 +123,16 @@ To evaluate our proposed generation method, we compare results of our method aga
 * <i>Syntactical soundess:</i> We expect our generated text is grammartically correct. 
 
 
-We show our method could generate text that is generally on par with human written story snippets in terms of style and grammar. 
+For all samples from our proposed method, we used top-k sampling option and constraint that the model returns the best searched solution in 30 words. We show our method could generate text that is generally on par with human written story snippets in terms of style and grammar. 
 
 
-### 1. style coherent
+### 1. Style coherency
 
 To ensure the results we generated are style coherent, we choose to use human evaluation metrics to ensure the ouputs are indeed of the intended style. We use two methods to check this feature: letting human evaluators guess the style of a given text without knowing its genre, and letting human evaluators rate the style coherency of a text given its genre. In both settings, we evaluated our generated text against human written text snippets. Note that our swap-based generator uses samples from the same human written text dataset, thus we omit its results from this section in particular.
 
 ![](src/human-eval.PNG)
 
-#### 1.1 measurement by style classification
+#### 1.1 Measurement by style classification
 
 Specifically, we randomly sample sentences with different styles from our system, and let human readers guess the genre of the generated sentence. Upon evaluation, the human rater is allowed to pick two genres out of the six possible genres. We mark a text snippet is correctly recognized if one of the guessed genre by human evaluator is the true genre of that text. We report the averaged recognized examples among human evaluators as follows:
 
@@ -135,13 +141,13 @@ Specifically, we randomly sample sentences with different styles from our system
 Note that the Random Selection row is the result one would get if genre labels were randomly assigned to 60 samples with balancely distributed genres. Interestingly, upon evaluation we found that it is harder than expected for a human evaluator to guess the genre of a text snippets. In conclusion, we show that our  generated result could achieve similar performance as human-produced texts.
 
 
-#### 1.1 measurement by score-based evaluation
+#### 1.1 Measurement by score-based evaluation
 
 We then let human evaluators rate the coherence score of a piece of text given its genre from 0 to 5. More precisely, 0 means not coherent at all and 5 means the genre is extremely clear. We show that our generated text generally achieves result as good as human written texts.
 
 
 
-### 2. syntactically sound
+### 2. Syntactical soundness
 
 To ensure our method only impose minimal damage to the ability of language model to generate syntactically correct text, we use Grammarly, an open source grammar checker to check the suspected grammar errors in our generated text. For a given docment, grammarly will reports the count of suspected errors and an overall score for writting([description of grammarly score](https://support.grammarly.com/hc/en-us/articles/360007144751-What-is-Performance-and-how-is-it-calculated-)).
 
@@ -169,9 +175,26 @@ It is clear that diamond is a inserted word, and the grammar is also not complet
 When recognized that pig is inserted in the generation process, out model will went on to talk about related terms like "farming", thus the generated text looks more natural. In summary, we show that our model uses target strings better than the baseline model.
 
 
-### 4. other discussions related to evaluation
+### 4. Appendix - Other discussions related to evaluation
+
+#### 4.1 Ability for our system to swap at least one target word
 
 A basic requirement for our language generation task is the ability to make the target string appear in the output. To evaluate this, we queried both our baseline generator and proposed generator for 120 samples, and both of the generators succeeded in all cases. 
+
+#### 4.2 Target swapping loss and quality trade-off
+
+A natural question that comes with our generation task is whether there is a limit with respect to how many target strings we could make the output contain. As our system keeps track of all possible choices of outputs, the answer to such question will depend on how much quality of the generated text is the user willing to compensate, and whether there is any length constraint of the output.
+
+As a general suggestion, we show the target swapping loss(defined in Approach-2.2) for the model's best result with respect to the length constraint of output text. Naturally, the longer the output can be, the better the quality of swapping will be. For example, if the user accepts the quality of a search loop of 5, and want to make 5 words appear in the output, the model should be able to find the solution in 25 words, excluding remaining words that the model need to sample before the EOS token.
+
+![](src/swap_loss.PNG)
+
+We show some examples here for a taste of the quality of generated text at different swap loss levels. 
+
+* Long long ago, an elite \[\[\[diamond\]\]\] collection is being assembled at the vast Smithfield diamond museum. (6.071291923522949)
+
+* Long long ago in a Southern California \[\[\[forest\]\]\] bayou, 21-year-old Eddie Brock (Joseph Bottoms) is swimming alone when Jack (Perry Henry) walks by.(1.9446792602539062)
+* Long long ago, the \[\[\[forest\]\]\] was full of what used to be golden deer corpses and deformed people...(0.38306617736816406)
 
 ## References
 
