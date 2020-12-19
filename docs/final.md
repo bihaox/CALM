@@ -62,7 +62,7 @@ To determine the position to swap the target string in, we make use of [part-of-
 
 We choose pretrained GPT-2 model fine tuned on style specific corpus such as horror story and super hero stories for language generation(4, 6). During the training process, the pre-trained model was given samples that starts with a genre token, thus the model will learn to generate different texts based on the given genre token. A typical sample in training data looks like the following:
 
-* <horror><BOS>...a short horror story...
+* \<horror\>\<BOS\>...a short horror story...
 
 Thus, we would be able to control the generation behaviour of the model by conditioning the model on the same special style tokens. At each language generation step, the pretrained model ouputs a logits of  corpus size that specifies the probability of the corresponding words to appear at the current position. Traditionally, the word chosen at each generation step is achived by approaches such as nucleus sampling and top-k sampling(14). 
 
