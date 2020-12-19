@@ -66,6 +66,10 @@ To achieve context aware langauge generation, our system retrieves description o
 
 To find the optimal sequence, our system generates candidate sequence by computing the potential target word swapping loss $$abs(p(target word \mid h_{t-1})-p(chosen word \mid h_{t-1}))$$ at each generation step t, and view the current sequence as a candidate hypothesis if such loss is smaller than a pre-defined threshhold. Upon generation of a hypothesis, the word swapping loss is assigned to that branch as a score. Meanwhile, the system will keep on the generation process with other possible cases where the word swap did not take place, untill a new position where the target word could be swapped in or end of generation steps is reached. After the exploration of candicate hypothesises is done, we choose the word sequence with lowest swapping loss as output.
 
+#### 2.3 discussion of generation approaches
+
+The baseline method had the advantage of being easy to implement and having fast inference time. However, the swap-based nature makes it unable to generate completely orginal text snippets. Meanwhile, while POS tagger most gerentees the generated text is grammartically correct, this approach does not take into consideration the meaning of the target word. Compared to the baseline, our proposed method could generate more diverse and unseen text snippets. Meanwhile, the model could consider the semantics of the target words in generation process, thus could produce more natural texts with given string.
+
 ### 3. Environment perception methods
 
 We cover our method for retrieving strings from surrounding environment in this section. 
@@ -138,7 +142,7 @@ To ensure our method only impose minimal damage to the ability of language model
 
 
 | Method | Error Count(120 samples)   | Grammarly Score |
-| :---    | ---:   | ---:        |
+| :---    | :---   | ---:        |
 | Swap-based<i>(baseline)</i> | 147      | 87 |
 | Human Written | 142      | 86 | 
 | CALM<i>(proposed)</i> | 151      | 85 | 
