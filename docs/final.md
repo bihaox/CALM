@@ -7,7 +7,7 @@ title: Status
 
 ## Video
 
-<iframe width="1008" height="567" src="https://www.youtube.com/embed/WQxsgLZk0yg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1008" height="567" src="https://www.youtube.com/embed/LWo-Bb1cbnU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 
@@ -164,7 +164,7 @@ Specifically, we pasted 120 generated samples for both the proposed method, the 
 
 In general, all methods of generation will generate grammartically correct text snippets, and the difference in error count and scores is within the tolerant level for compensating the stochasity of sampling. Note that grammarly assigns different weights for different errors, so a document with more errors could still get a higher overall score - the Grammarly Score should be treated more of a qualititive metric.
 
-### 3. How well does target string blend in?
+### 3. How well does target string(from blocks) blend in?
 
 Since both our basedline and proposed approach works by replacing a victim word by the target word at some point in the generation process, a natural question to ask is how naturally does the target string fit into the produced text. As naturalness is generally a subjective term, we use human ratings for this metric and treat this as a qualitative feature. Conceretly, we sample sentences pairs containing the same string from both generators 60 times to construct evaluation dataset for this subsection. We then let a human evaluator pick the sentence in which the target string looks more natural without knowling the producer of each samples.
 
