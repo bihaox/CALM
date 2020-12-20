@@ -145,7 +145,7 @@ Specifically, we randomly sample sentences with different styles from our system
 Note that the Random Selection row is the result one would get if genre labels were randomly assigned to 60 samples with balancely distributed genres. Interestingly, upon evaluation we found that it is harder than expected for a human evaluator to guess the genre of a text snippets. In conclusion, we show that our  generated result could achieve similar performance as human-produced texts.
 
 
-#### 1.1 Measurement by score-based evaluation
+#### 1.2 Measurement by score-based evaluation
 
 We then let human evaluators rate the coherence score of a piece of text given its genre from 0 to 5. More precisely, 0 means not coherent at all and 5 means the genre is extremely clear. We show that our generated text generally achieves result as good as human written texts.
 
