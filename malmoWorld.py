@@ -2,7 +2,10 @@ from __future__ import print_function
 from __future__ import division
 from builtins import range
 from past.utils import old_div
-import MalmoPython
+try:
+    from malmo import MalmoPython
+except:
+    import MalmoPython
 import os
 import sys
 import time
