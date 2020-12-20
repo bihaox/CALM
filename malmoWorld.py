@@ -35,7 +35,7 @@ REPLAY_BUFFER_SIZE = 10000
 BATCH_SIZE = 128
 GAMMA = .9
 TARGET_UPDATE = 100
-WORLD_PATH = os.path.join(os.getcwd(), 'New World')
+WORLD_PATH = os.path.join(os.getcwd(), 'new_world')
 if sys.version_info[0] == 2:
     sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)  # flush print output immediately
 else:
