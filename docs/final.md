@@ -194,7 +194,9 @@ A basic requirement for our language generation task is the ability to make the 
 
 A natural question that comes with our generation task is whether there is a limit with respect to how many target strings we could make the output contain. As our system keeps track of all possible choices of outputs, the answer to such question will depend on how much quality of the generated text is the user willing to compensate, and whether there is any length constraint of the output.
 
-As a general suggestion, we show the target swapping loss(defined in Approach-2.2) for the model's best result with respect to the length constraint of output text(for each target word). Naturally, the longer the output can be, the better the quality of swapping will be. For example, if the user accepts the quality of a search loop of 5, and want to make 5 words appear in the output, the model should be able to find the solution in 25 words, excluding remaining words that the model need to sample before the EOS token.
+As a general suggestion, we show the target swapping loss(defined in Approach-2.2) for the model's best result with respect to the length constraint of output text(for each target word). In the table, each data point $$(X=N,Y=S)$$ is obtained by letting the model find the best sentences of length N for 10 different combination of genre tokens and input phrases, and take the average of the swapping losses of these best sentences as S. 
+
+Naturally, the longer the output can be, the better the quality of swapping will be. For example, if the user accepts the quality of a search loop of 5, and want to make 5 words appear in the output, the model should be able to find the solution in 25 words, excluding remaining words that the model need to sample before the EOS token.
 
 ![](src/swap_loss.PNG)
 
