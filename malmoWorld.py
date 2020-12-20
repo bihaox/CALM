@@ -35,14 +35,7 @@ REPLAY_BUFFER_SIZE = 10000
 BATCH_SIZE = 128
 GAMMA = .9
 TARGET_UPDATE = 100
-WORLD_PATH = os.path.join(os.path.dirname(__file__), 'New World')
-ACTION_DICT = {
-    0: 'move 1',  # Move one block forward
-    1: 'turn 1',  # Turn 90 degrees to the right
-    2: 'turn -1',  # Turn 90 degrees to the left
-    3: 'attack 1'  # Destroy block
-}
-
+WORLD_PATH = os.path.join(os.getcwd(), 'New World')
 if sys.version_info[0] == 2:
     sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)  # flush print output immediately
 else:
@@ -77,6 +70,8 @@ def get_observation(world_state,weather,time_now):
             # Get observation
             if weather != 'clear':
                 object_list.append(weather)
+            else:
+                object_list.append('sunny')
             if time_now>13000:
                 object_list.append("night")
             else:
