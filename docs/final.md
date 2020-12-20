@@ -120,7 +120,7 @@ To make generated text related to environment perception, we use if statement to
 
 ## Evaluation
 
-![](src/samples.PNG)
+![](src/samples2.PNG)
 
 
 To evaluate our proposed generation method, we compare results of our method against our baseline and/or human written short story snippets in various setups. We evaluate our results by the following characteristics:
