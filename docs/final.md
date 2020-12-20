@@ -9,6 +9,11 @@ title: Status
 
 <iframe width="1008" height="567" src="https://www.youtube.com/embed/LWo-Bb1cbnU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+0:00 Problem description, 
+1:00 Baseline, demos
+1:24 Proposed method, demos 
+
+
 ## Project Summary
 
 We propose Context Aware Language Generator for Minecraft(CALM), a framework for generating environment aware, style specific text snippets in Minecraft. Specifically, our agent will recognize the surrounding environment, which we refer to as context, to generate short stories that are coherent to the received environment. For example, given a river flowing near the agent as context and a user defined style such as horror story style, the agent should be able to generate short text snippets that contain string “river” in the style of horror stories. Concretely, we decided that our system will support generation of the following six styles: [superhero, action, drama, horror, thriller, and sci_fi]. Meanwhile, our system could take into account discrete blocks, composite blocks, weather and time of day when generating text snippets.
