@@ -120,7 +120,7 @@ To make generated text related to environment perception, we use if statement to
 
 ## Evaluation
 
-![](src/samples2.PNG)
+![](src/samples2.PNG){:height="80%" width="80%"}
 
 
 To evaluate our proposed generation method, we compare results of our method against our baseline and/or human written short story snippets in various setups. We evaluate our results by the following characteristics:
