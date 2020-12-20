@@ -115,7 +115,7 @@ We cover our methods for retrieving strings from surrounding environment in this
 
 We designed the two modules to be stand alone, and both could be used as-is. We include relevant implementaion that is required to replicate our results in the demo video in this section, but both modules should be easily customizable.
 
-To make generated text related to environment perception, we use if statement to check the environment condition. When the time is night, we prefer to use 'horror' or 'thrill' as genre to generate word.Specificly, we will give both 'horror' or 'thrill' a 0.4 out of 1 probability which are than the other genres when we generate. Also, when we detect specific items, such as lava, we prefer to use 'sci-fi' or 'superhero' as genre, which use the same method describe upper. 
+To make generated text related to environment perception, we use if statement to check the environment condition. When the time is night, we prefer to use 'horror' or 'thriller' as genre to generate word.Specificly, we will give both 'horror' or 'thriller' a 0.4 out of 1 probability which are than the other genres when we generate. Also, when we detect specific items, such as lava, we prefer to use 'sci-fi' or 'superhero' as genre, which use the same method describe upper. 
 
 
 ## Evaluation

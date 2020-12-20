@@ -72,7 +72,7 @@ class TextGen:
     
     def get_nucleus_results(self, input_word, target_word, genre, search_size):
         '''
-        This function will store nucleus results in a dict which 
+        This function will store nucleus results in a dict as a search space to further search 
         '''
 
         sent = '<BOS> <'+ genre +'>' + input_word
