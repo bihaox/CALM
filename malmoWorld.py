@@ -193,8 +193,7 @@ while not world_state.has_mission_begun:
 print()
 TOTAL_LOOP = 25
 textGen = TextGen.TextGen()
-#genre_list = ['superhero', 'sci_fi', 'action', 'drama', 'horror', 'thriller']
-genre_list = ['superhero', 'sci_fi']
+genre_list = ['superhero', 'sci_fi', 'action', 'drama', 'horror', 'thriller']
 mode = 'nucleus'
 search_size = 10
 # Loop until mission ends:
@@ -216,7 +215,22 @@ while world_state.is_mission_running:
     prvious_list = list(obs)
 
     #out put genre
-    genre = genre_list[random.randint(0,len(genre_list)-1)]
+    if 'night' in obs:
+        if random.random()<0.8:
+            genre = genre_list[randint(4,6)]
+        else:
+            genre = genre_list[randint(0,4)]
+    elif 'lava' in obs:
+        if random.random()<0.8:
+            genre = genre_list[randint(0,2)]
+        else:
+            genre = genre_list[randint(2,6)]
+    else:
+        if random.random()<0.8:
+            genre = genre_list[randint(0,4)]
+        else:
+            genre = genre_list[randint(4,6)]
+    
     print('genre:', genre)
     agent_host.sendCommand("chat " + 'genre: ' + genre)
 

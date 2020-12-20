@@ -78,7 +78,7 @@ To find the optimal sequence, our system generates candidate sequence by computi
 
 #### 2.3 discussion of generation approaches
 
-The baseline method had the advantage of being easy to implement and having fast inference time. However, the swap-based nature makes it unable to generate completely orginal text snippets. Meanwhile, while POS tagger most gerentees the generated text is grammartically correct, this approach does not take into consideration the meaning of the target word. Compared to the baseline, our proposed method could generate more diverse and unseen text snippets. Meanwhile, the model could consider the semantics of the target words in generation process, thus could produce more natural texts with given string. Howver, due to the large search space that is explored in the decoding process, our proposed method have longer inference time when compared to the baseline model.
+The baseline method had the advantage of being easy to implement and having fast inference time. However, the swap-based nature makes it unable to generate completely orginal text snippets. Meanwhile, while POS tagger most gerentees the generated text is grammartically correct, this approach does not take into consideration the meaning of the target word. Compared to the baseline, our proposed method could generate more diverse and unseen text snippets. Meanwhile, the model could consider the semantics of the target words in generation process, thus could produce more natural texts with given string. However, due to the large search space that is explored in the decoding process, our proposed method have longer inference time when compared to the baseline model.
 
 ### 3. The environment perception module
 
@@ -92,7 +92,7 @@ We cover our methods for retrieving strings from surrounding environment in this
 
 * <i>Detecting object from composite block:</i> 
 
-    We use ObservationFromGrid to detect the object from a single block. When present, the Mod will return observations that say what the nearby blocks are and I use some if and else to determine the composite block. For example, if there are two or more leaves, it must be a tree.
+    We use ObservationFromGrid to detect the object from a single block. When present, the Mod will return observations that say what the nearby blocks are and we use some if and else to determine the composite block. For example, if there are two or more leaves, it must be a tree.
 
 * <i>Detecting mob:</i> 
 
@@ -100,7 +100,7 @@ We cover our methods for retrieving strings from surrounding environment in this
     
 * <i>Detecting weather:</i> 
 
-    The Malmo API does not provide support for the agent to percept the weather, but a user might want to modify the time of day using Malmo environment xml. In that case, we provide ability in our system to return a string that corresponds to the current weather in game(rain, thunder, clear). 
+    The Malmo API does not provide support for the agent to percept the weather, but a user might want to modify the time of day using Malmo environment xml. In that case, we provide ability in our system to return a string that corresponds to the current weather in game(rain, thunder, clear->sunny). 
     
 * <i>Detecting time of day:</i> 
 
@@ -109,6 +109,8 @@ We cover our methods for retrieving strings from surrounding environment in this
 #### 3.2 Interaction between environment perception and text generation modules
 
 We designed the two modules to be stand alone, and both could be used as-is. We include relevant implementaion that is required to replicate our results in the demo video in this section, but both modules should be easily customizable.
+
+To make generated text related to environment perception, we use if statement to check the environment condition. When the time is night, we prefer to use 'horror' or 'thrill' as genre to generate word.Specificly, we will give both 'horror' or 'thrill' a 0.4 out of 1 probability which are than the other genres when we generate. Also, when we detect specific items, such as lava, we prefer to use 'sci-fi' or 'superhero' as genre, which use the same method describe upper. 
 
 
 ## Evaluation
