@@ -23,8 +23,10 @@ class TextGen:
     
 
     
-    def top_k_top_p_filtering(self, logits, top_k=0, top_p=0.0, filter_value=-float('Inf')):
-        """ Filter a distribution of logits using top-k and/or nucleus (top-p) filtering
+    def nucleus_top_p_filtering(self, logits, top_p=0.0, filter_value=-float('Inf')):
+        """
+        get code from: https://gist.github.com/thomwolf/1a5a29f6962089e871b94cbd09daf317 
+        Filter a distribution of logits using top-k and/or nucleus (top-p) filtering
             Args:
                 logits: logits distribution shape (vocabulary size)
                 top_k >0: keep only top k tokens with highest probability (top-k filtering).
@@ -32,12 +34,7 @@ class TextGen:
                     Nucleus filtering is described in Holtzman et al. (http://arxiv.org/abs/1904.09751)
         """
         assert logits.dim() == 1  # batch size 1 for now - could be updated for more but the code would be less clear
-        top_k = min(top_k, logits.size(-1))  # Safety check
-        if top_k > 0:
-            # Remove all tokens with a probability less than the last token of the top-k
-            indices_to_remove = logits < torch.topk(logits, top_k)[0][..., -1, None]
-            logits[indices_to_remove] = filter_value
-
+        
         if top_p > 0.0:
             sorted_logits, sorted_indices = torch.sort(logits, descending=True)
             cumulative_probs = torch.cumsum(F.softmax(sorted_logits, dim=-1), dim=-1)
@@ -53,13 +50,16 @@ class TextGen:
         return logits
     
     def random_generate(self, input_word, genre, total_loop):
+        '''
+        This function take input_word and genre gerate randomly with nucleus sample
+        '''
         sent = '<BOS> <'+ genre +'>' + input_word 
         current_word = input_word
         for i in range(total_loop):
             logits = self.get_next_logits(sent)
             copy_logits = logits.clone().detach()
 
-            filtered_logits = self.top_k_top_p_filtering(copy_logits, top_k=0, top_p=0.9)
+            filtered_logits = self.nucleus_top_p_filtering(copy_logits, top_p=0.9)
             probabilities = F.softmax(filtered_logits, dim=-1)
             next_id = torch.multinomial(probabilities, 1)
 
@@ -71,6 +71,10 @@ class TextGen:
         
     
     def get_nucleus_results(self, input_word, target_word, genre, search_size):
+        '''
+        This function will store nucleus results in a dict which 
+        '''
+
         sent = '<BOS> <'+ genre +'>' + input_word
         current_word = input_word
         results = dict()
@@ -83,7 +87,7 @@ class TextGen:
                 break
             target_prob = self.get_prob_from_logits(target_id, logits)
 
-            filtered_logits = self.top_k_top_p_filtering(copy_logits, top_k=0, top_p=0.9)
+            filtered_logits = self.nucleus_top_p_filtering(copy_logits, top_p=0.9)
             probabilities = F.softmax(filtered_logits, dim=-1)
             next_id = torch.multinomial(probabilities, 1)
             next_word = self.tokenizer.decode(next_id)

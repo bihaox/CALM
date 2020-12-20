@@ -72,6 +72,7 @@ def get_observation(world_state,weather,time_now):
                 object_list.append(weather)
             else:
                 object_list.append('sunny')
+
             if time_now>13000:
                 object_list.append("night")
             else:
@@ -207,14 +208,18 @@ while world_state.is_mission_running:
     obs=get_observation(world_state,WEATHER,time_now)
     obs = [x.lower() for x in obs]
     
-    
+    #out put observation
+    agent_host.sendCommand("chat " + 'observation: ' + str(obs))
     print()
     print('observation:', obs)
     
     prvious_list = list(obs)
 
+    #out put genre
     genre = genre_list[random.randint(0,len(genre_list)-1)]
     print('genre:', genre)
+    agent_host.sendCommand("chat " + 'genre: ' + genre)
+
     if genre == 'sci_fi' or genre =='superhero':
         input_word = ['In the future', 'In the year of 2077', 'Yesterday'][randint(0, 3)]
     elif genre == 'horror' or genre =='thriller':
