@@ -122,6 +122,8 @@ To evaluate our proposed generation method, we compare results of our method aga
 
 * <i>Syntactical soundess:</i> We expect our generated text is grammartically correct. 
 
+* <i>How well does target strings blend in:</i> We expect the target string to fit smoothly into the generated text.
+
 
 For all samples from our proposed method, we used top-k sampling option and constraint that the model returns the best searched solution in 30 words. We show our method could generate text that is generally on par with human written story snippets in terms of style and grammar. 
 
